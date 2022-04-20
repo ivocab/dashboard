@@ -1,0 +1,13 @@
+.loading {
+	width: 100%;
+	height: 100vh;
+	display: flex;
+
+	&__table {
+		height: unset;
+		position: absolute;
+		top: 80px;
+		left: 50%;
+		transform: translate(-50%, 0);
+	}
+}
