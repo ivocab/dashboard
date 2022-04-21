@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../routes";
 import { SetAuth } from "../../store/auth";
+import { SetLocation } from "../../store/dashboard";
 import { burgerMenu, ivocab, ivocabDesc, ivocabText, logo } from "../icons";
 import st from "./sidebar.module.scss";
 
@@ -14,6 +15,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 				link: RouteNames.HOME,
 				func: () => {
 					navigate(RouteNames.HOME);
+					dispatch(SetLocation("HOME"));
 				},
 			},
 			{
@@ -23,6 +25,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 			{
 				title: "Levels",
 				link: "/levels",
+				func: () => {
+					navigate(RouteNames.LEVELS);
+					dispatch(SetLocation("LEVELS"));
+				},
 			},
 			{
 				title: "Words",
@@ -55,7 +61,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 			</div>
 			<div className={st.sidebar__body}>
 				<ul>
-					{console.log(window.location)}
 					{links.map((item, i) => (
 						<li
 							key={i}

@@ -6,6 +6,7 @@ import st from "./app.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { SetAuth } from "./store/auth";
 import Loading from "./components/loading";
+import Header from "./components/header";
 
 function App() {
 	const [loading, setLoading] = useState(true),
@@ -40,6 +41,7 @@ function App() {
 			<div className={st.home}>
 				<Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 				<div className={st.home__right}>
+					<Header />
 					<AppRouter />
 				</div>
 			</div>

@@ -1,0 +1,17 @@
+.header {
+	height: 60px;
+	background-color: #fafafa;
+	display: flex;
+	align-items: center;
+	padding: 20px;
+
+	h1 {
+		color: #141272;
+		font-size: 26px;
+		line-height: 100%;
+		margin-left: 20px;
+		font-weight: 500;
+		margin-bottom: 0;
+		text-transform: uppercase;
+	}
+}

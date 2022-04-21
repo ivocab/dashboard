@@ -1,0 +1,39 @@
+.customTable {
+	width: 100%;
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 0 10px 10px;
+
+	table {
+		width: 100%;
+
+		th,
+		td {
+			color: #141272;
+			padding: 10px;
+			border-bottom: 1px solid #141272;
+		}
+
+		tr {
+			td {
+				transition: all 0.2s ease;
+			}
+
+			&:hover {
+				td {
+					cursor: pointer;
+					background-color: #6a56e4;
+				}
+			}
+		}
+
+		thead {
+			tr {
+				th {
+					font-size: 18px;
+					font-weight: 500;
+				}
+			}
+		}
+	}
+}
