@@ -1,7 +1,7 @@
 import { axiosInstance } from "./api";
-const api = "/level";
+const api = "/user";
 
-export const levelsService = {
+export const usersService = {
 	get: (query) => axiosInstance.get(`${api}?${query}`),
 	add: (data) => axiosInstance.post(`${api}`, data),
 	edit: (id, data) => axiosInstance.put(`${api}/${id}`, data),

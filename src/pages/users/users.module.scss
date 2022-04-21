@@ -1,0 +1,28 @@
+.users {
+	padding: 40px 20px;
+
+	&__manipulations {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		margin-bottom: 20px;
+	}
+
+	table {
+		div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			span {
+				margin: 0 10px;
+				cursor: pointer;
+
+				svg {
+					width: 20px;
+					height: 20px;
+				}
+			}
+		}
+	}
+}

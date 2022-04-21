@@ -7,10 +7,10 @@ import CustomTable from "../../components/customTable";
 import { del, edit } from "../../components/icons";
 import Loading from "../../components/loading";
 import Pagination from "../../components/pagination";
-import { levelsService } from "../../services/levelsService";
-import st from "./levels.module.scss";
+import { usersService } from "../../services/usersService";
+import st from "./users.module.scss";
 
-const Levels = () => {
+const Users = () => {
 	const [data, setData] = useState([]),
 		[loading, setLoading] = useState(true),
 		[page, setPage] = useState(1),
@@ -25,7 +25,7 @@ const Levels = () => {
 	const getData = () => {
 		setLoading(true);
 
-		levelsService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
+		usersService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
 			setData(res.data.data);
 			setLoading(false);
 		});
@@ -39,35 +39,20 @@ const Levels = () => {
 		e.preventDefault();
 
 		const data = {
-			name: e.target[0].value,
-			markForMin: +e.target[1].value,
-			mark: +e.target[2].value,
-			accessMark: {
-				min: +e.target[3].value,
-				max: +e.target[4].value,
-			},
-			status: "active",
+			status: e.target[0].value,
 		};
 
-		modal.type === "add"
-			? levelsService
-					.add(data)
-					.then((res) => {
-						setModal(defStateModal);
-						getData();
-					})
-					.catch((e) => console.log(e))
-			: levelsService
-					.edit(modal.data._id, data)
-					.then((res) => {
-						setModal(defStateModal);
-						getData();
-					})
-					.catch((e) => console.log(e));
+		usersService
+			.edit(modal.data._id, data)
+			.then((res) => {
+				setModal(defStateModal);
+				getData();
+			})
+			.catch((e) => console.log(e));
 	};
 
 	const delItem = () => {
-		levelsService.del(modal.delId).then((res) => {
+		usersService.del(modal.delId).then((res) => {
 			setModal((prev) => ({ ...prev, showDel: false }));
 
 			getData();
@@ -77,8 +62,8 @@ const Levels = () => {
 	if (loading) return <Loading />;
 
 	return (
-		<div className={st.levels}>
-			<div className={st.levels__manipulations}>
+		<div className={st.users}>
+			<div className={st.users__manipulations}>
 				<CustomSelect
 					title="Limit:"
 					options={[
@@ -97,9 +82,7 @@ const Levels = () => {
 					]}
 					value={limit}
 					setValue={setLimit}
-					className="me-3"
 				/>
-				<CustomButton title="Create" onClick={() => setModal((prev) => ({ ...prev, show: true }))} />
 			</div>
 			<CustomTable
 				table={
@@ -108,22 +91,24 @@ const Levels = () => {
 							<tr>
 								<th>id</th>
 								<th>Name</th>
-								<th className="text-center">Mark for 60sec.</th>
+								<th className="text-center">Level</th>
+								<th className="text-center">Lang</th>
 								<th className="text-center">Mark</th>
-								<th className="text-center">Access mark</th>
+								<th className="text-center">Place</th>
+								<th className="text-center">Last visit</th>
 								<th className="text-center">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
-							{data.levels.map((item, i) => (
+							{data.users.map((item, i) => (
 								<tr>
 									<td>{(page - 1) * +limit + i + 1}</td>
 									<td>{item.name}</td>
-									<td className="text-center">{item.markForMin}</td>
-									<td className="text-center">{item.mark}</td>
-									<td className="text-center">
-										{item.accessMark.min}-{item.accessMark.max}
-									</td>
+									<td className="text-center">{item.level}</td>
+									<td className="text-center">{item.language}</td>
+									<td className="text-center">{item.score}</td>
+									<td className="text-center">{/*item.score*/} place</td>
+									<td className="text-center">{item.updatedAt}</td>
 									<td>
 										<div>
 											<span
@@ -158,29 +143,23 @@ const Levels = () => {
 
 			<Modal show={modal.show} onHide={() => setModal(defStateModal)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Levels {modal.type}</Modal.Title>
+					<Modal.Title>User {modal.type}</Modal.Title>
 				</Modal.Header>
 				<form onSubmit={onSave}>
 					<Modal.Body>
-						<CustomInput type="text" defVal={modal?.data?.name} title="Name:" placeholder="Beginer" />
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.markForMin}
-							title="Mark for 60sec:"
-							placeholder="100"
-						/>
-						<CustomInput type="number" defVal={modal?.data?.mark} title="Mark:" placeholder="10" />
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.accessMark?.min}
-							title="Access mark min:"
-							placeholder="0"
-						/>
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.accessMark?.max}
-							title="Access mark max:"
-							placeholder="1999"
+						<CustomSelect
+							title="Status"
+							options={[
+								{
+									title: "Active",
+									value: "active",
+								},
+								{
+									title: "Unactive",
+									value: "unactive",
+								},
+							]}
+							value={modal?.data?.status}
 						/>
 					</Modal.Body>
 					<Modal.Footer>
@@ -214,4 +193,4 @@ const Levels = () => {
 	);
 };
 
-export default Levels;
+export default Users;

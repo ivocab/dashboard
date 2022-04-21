@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../routes";
 import { SetAuth } from "../../store/auth";
-import { SetLocation } from "../../store/dashboard";
 import { burgerMenu, ivocab, ivocabDesc, ivocabText, logo } from "../icons";
 import st from "./sidebar.module.scss";
 
@@ -15,19 +14,20 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 				link: RouteNames.HOME,
 				func: () => {
 					navigate(RouteNames.HOME);
-					dispatch(SetLocation("HOME"));
 				},
 			},
 			{
 				title: "Users",
 				link: "/users",
+				func: () => {
+					navigate(RouteNames.USERS);
+				},
 			},
 			{
 				title: "Levels",
 				link: "/levels",
 				func: () => {
 					navigate(RouteNames.LEVELS);
-					dispatch(SetLocation("LEVELS"));
 				},
 			},
 			{

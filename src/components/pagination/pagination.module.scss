@@ -1,0 +1,42 @@
+.pagination {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding: 20px 0;
+
+	p {
+		margin-bottom: 0;
+		margin-right: 15px;
+	}
+
+	span {
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background-color: #5743cd;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+
+		svg {
+			line {
+				transition: all 0.2s ease;
+			}
+		}
+
+		&:nth-child(2) {
+			transform: rotate(180deg);
+			margin-right: 10px;
+		}
+
+		&:hover {
+			background-color: #5643ce;
+			svg {
+				line {
+					stroke: #1bcfe7;
+				}
+			}
+		}
+	}
+}

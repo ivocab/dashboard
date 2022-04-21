@@ -2,12 +2,10 @@ import React from "react";
 import st from "./customSelect.module.scss";
 
 const CustomSelect = ({ title, options, className, value, setValue }) => {
-	console.log(+value, options);
-
 	return (
 		<div className={`${st.customSelect} ${className}`}>
 			<p>{title}</p>
-			<select onChange={(e) => setValue(e.target.value)}>
+			<select onChange={(e) => (setValue ? setValue(e.target.value) : null)}>
 				{options.map((option) => (
 					<option
 						key={option.title}
