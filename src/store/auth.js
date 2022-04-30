@@ -1,5 +1,5 @@
 export const defaultState = {
-	isAuth: false,
+	isLocalAuth: false,
 };
 
 const types = {
@@ -9,7 +9,7 @@ const types = {
 export default function Auth(state = defaultState, action) {
 	switch (action.type) {
 		case types.SET_AUTH:
-			return { ...state, isAuth: action.payload };
+			return { ...state, isLocalAuth: action.payload };
 		default:
 			return state;
 	}
