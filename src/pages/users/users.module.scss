@@ -26,3 +26,38 @@
 		}
 	}
 }
+
+.user {
+	padding: 40px 20px;
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 20px;
+
+		&__info {
+			display: flex;
+			align-items: center;
+
+			img {
+				width: 80px;
+				height: 80px;
+				object-fit: cover;
+				border-radius: 50%;
+				margin-right: 20px;
+				box-shadow: 0px 12px 24px rgba(130, 130, 130, 0.1);
+			}
+
+			h2 {
+				margin-bottom: 5px;
+			}
+		}
+	}
+
+	div {
+		width: 80%;
+
+		table {
+		}
+	}
+}

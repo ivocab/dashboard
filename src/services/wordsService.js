@@ -1,5 +1,5 @@
 import { axiosInstance } from "./api";
-const api = "/words";
+const api = "/word";
 
 export const wordsService = {
 	get: (query) => axiosInstance.get(`${api}?${query}`),

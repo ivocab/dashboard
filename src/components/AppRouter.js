@@ -10,7 +10,7 @@ const AppRouter = () => {
 			{routes.map((route) => (
 				<Route path={route.path} key={route.path} element={<route.element />} />
 			))}
-			<Route path='*' element={<Navigate to={RouteNames.HOME} />} />
+			<Route path="*" element={<Navigate to={RouteNames.HOME} />} />
 		</Routes>
 	);
 };

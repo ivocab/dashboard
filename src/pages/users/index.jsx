@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/customButton";
 import CustomInput from "../../components/customInput";
 import CustomSelect from "../../components/customSelect";
@@ -16,6 +17,7 @@ const Users = () => {
 		[loading, setLoading] = useState(true),
 		[page, setPage] = useState(1),
 		[limit, setLimit] = useState(10),
+		navigate = useNavigate(),
 		defStateModal = {
 			show: false,
 			showDel: false,
@@ -106,7 +108,7 @@ const Users = () => {
 						</thead>
 						<tbody>
 							{data.users.map((item, i) => (
-								<tr>
+								<tr onClick={() => navigate(`/users/${item._id}`)}>
 									<td>{(page - 1) * +limit + i + 1}</td>
 									<td>{item.name}</td>
 									<td className="text-center">{item.level}</td>

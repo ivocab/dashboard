@@ -33,6 +33,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 			{
 				title: "Words",
 				link: "/words",
+				func: () => {
+					navigate(RouteNames.WORDS);
+				},
 			},
 			{
 				title: "Support",
@@ -65,10 +68,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 						<li
 							key={i}
 							className={`${st.sidebar__body__link} ${
-								item.link === window.location.pathname ? st.sidebar__body__link__active : ""
+								item.link === window.location.pathname
+									? st.sidebar__body__link__active
+									: ""
 							}`}
-							onClick={() => (item.func ? item.func() : null)}
-						>
+							onClick={() => (item.func ? item.func() : null)}>
 							<span>{item.img}</span>
 							<span>{item.title}</span>
 						</li>
