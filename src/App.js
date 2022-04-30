@@ -17,7 +17,7 @@ function App() {
 
 	const Conf = () => {
 		const conf = window.prompt("Введите пароль: ");
-		if (conf === "Acer9963*") {
+		if (conf === "12345678") {
 			dispatch(SetLocalAuth(true));
 			localStorage.setItem("isLocalAuth", true);
 			setLoading(false);

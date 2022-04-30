@@ -4,7 +4,7 @@ import CustomButton from "../../components/customButton";
 import CustomInput from "../../components/customInput";
 import CustomSelect from "../../components/customSelect";
 import CustomTable from "../../components/customTable";
-import { del, edit } from "../../components/icons";
+import { del, edit, voice } from "../../components/icons";
 import Loading from "../../components/loading";
 import Pagination from "../../components/pagination";
 import { wordsService } from "../../services/wordsService";
@@ -110,23 +110,44 @@ const Words = () => {
 						<thead>
 							<tr>
 								<th>id</th>
+								<th>Image</th>
 								<th>Name</th>
-								<th className="text-center">Mark for 60sec.</th>
-								<th className="text-center">Mark</th>
-								<th className="text-center">Access mark</th>
-								<th className="text-center">Actions</th>
+								<th className="text-center text-nowrap">Transcription</th>
+								<th className="text-center text-nowrap">Voice</th>
+								<th className="text-center text-nowrap">Translation RU</th>
+								<th className="text-center text-nowrap">Translation UZ</th>
+								<th className="text-center text-nowrap">Level</th>
+								<th className="text-center text-nowrap">Description</th>
+								<th className="text-center text-nowrap">Example</th>
+								<th className="text-center text-nowrap">Example RU</th>
+								<th className="text-center text-nowrap">Example UZ</th>
+								<th className="text-center text-nowrap">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
 							{data.words.map((item, i) => (
 								<tr>
 									<td>{(page - 1) * +limit + i + 1}</td>
-									<td>{item.name}</td>
-									<td className="text-center">{item.markForMin}</td>
-									<td className="text-center">{item.mark}</td>
-									<td className="text-center">
-										{item.accessMark.min}-{item.accessMark.max}
+									<td>
+										<img src={item.image.url} />
 									</td>
+									<td>{item.name}</td>
+									<td className="text-center">[{item.transcript}]</td>
+									<td
+										className="text-center"
+										onClick={() => {
+											let audio = new Audio(item.voice.url);
+											audio.play();
+										}}>
+										{voice}
+									</td>
+									<td className="text-center">{item.translationRu}</td>
+									<td className="text-center">{item.translationUz}</td>
+									<td className="text-center">{item?.level?.name}</td>
+									<td className="text-left">{item.description}</td>
+									<td className="text-left">{item.example}</td>
+									<td className="text-left">{item.exampleRu}</td>
+									<td className="text-left">{item.exampleUz}</td>
 									<td>
 										<div>
 											<span
