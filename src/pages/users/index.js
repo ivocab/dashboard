@@ -8,6 +8,7 @@ import { del, edit } from "../../components/icons";
 import Loading from "../../components/loading";
 import Pagination from "../../components/pagination";
 import { usersService } from "../../services/usersService";
+import { BeautyFullTime, JamesSort } from "../../utils";
 import st from "./users.module.scss";
 
 const Users = () => {
@@ -22,18 +23,22 @@ const Users = () => {
 		},
 		[modal, setModal] = useState(defStateModal);
 
-	const getData = () => {
-		setLoading(true);
+	// const getData = () => {
+	// 	setLoading(true);
+	// };
 
-		usersService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
+	useEffect(() => {
+		setLoading(true);
+		usersService.get(`_page=1&_limit=100000000&_sort=asc`).then((res) => {
+			console.log(JamesSort(res.data.data.users));
 			setData(res.data.data);
 			setLoading(false);
 		});
-	};
+	}, []);
 
-	useEffect(() => {
-		getData();
-	}, [page, limit]);
+	// useEffect(() => {
+	// 	getData();
+	// }, [page, limit]);
 
 	const onSave = (e) => {
 		e.preventDefault();
@@ -42,20 +47,20 @@ const Users = () => {
 			status: e.target[0].value,
 		};
 
-		usersService
-			.edit(modal.data._id, data)
-			.then((res) => {
-				setModal(defStateModal);
-				getData();
-			})
-			.catch((e) => console.log(e));
+		// usersService
+		// 	.edit(modal.data._id, data)
+		// 	.then((res) => {
+		// 		setModal(defStateModal);
+		// 		getData();
+		// 	})
+		// 	.catch((e) => console.log(e));
 	};
 
 	const delItem = () => {
 		usersService.del(modal.delId).then((res) => {
 			setModal((prev) => ({ ...prev, showDel: false }));
 
-			getData();
+			// getData();
 		});
 	};
 
@@ -108,7 +113,9 @@ const Users = () => {
 									<td className="text-center">{item.language}</td>
 									<td className="text-center">{item.score}</td>
 									<td className="text-center">{/*item.score*/} place</td>
-									<td className="text-center">{item.updatedAt}</td>
+									<td className="text-center">
+										{BeautyFullTime(item.updatedAt)}
+									</td>
 									<td>
 										<div>
 											<span
@@ -119,15 +126,17 @@ const Users = () => {
 														type: "edit",
 														data: item,
 													}))
-												}
-											>
+												}>
 												{edit}
 											</span>
 											<span
 												onClick={() =>
-													setModal((prev) => ({ ...prev, showDel: true, delId: item._id }))
-												}
-											>
+													setModal((prev) => ({
+														...prev,
+														showDel: true,
+														delId: item._id,
+													}))
+												}>
 												{del}
 											</span>
 										</div>

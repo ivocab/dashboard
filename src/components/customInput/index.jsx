@@ -1,7 +1,7 @@
 import React from "react";
 import st from "./customInput.module.scss";
 
-const CustomInput = ({ title, defVal, setVal, type, placeholder, className }) => {
+const CustomInput = ({ title, defVal, setVal, type, placeholder, className, required }) => {
 	return (
 		<table className={`${st.customInput} ${className}`}>
 			<tr>
@@ -12,6 +12,7 @@ const CustomInput = ({ title, defVal, setVal, type, placeholder, className }) =>
 						defaultValue={defVal}
 						placeholder={placeholder}
 						onChange={(e) => setVal(e.target.value)}
+						required={required}
 					/>
 				</td>
 			</tr>

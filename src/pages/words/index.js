@@ -7,10 +7,10 @@ import CustomTable from "../../components/customTable";
 import { del, edit } from "../../components/icons";
 import Loading from "../../components/loading";
 import Pagination from "../../components/pagination";
-import { levelsService } from "../../services/levelsService";
-import st from "./levels.module.scss";
+import { wordsService } from "../../services/wordsService";
+import st from "./words.module.scss";
 
-const Levels = () => {
+const Words = () => {
 	const [data, setData] = useState([]),
 		[loading, setLoading] = useState(true),
 		[page, setPage] = useState(1),
@@ -25,7 +25,7 @@ const Levels = () => {
 	const getData = () => {
 		setLoading(true);
 
-		levelsService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
+		wordsService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
 			setData(res.data.data);
 			setLoading(false);
 		});
@@ -50,14 +50,14 @@ const Levels = () => {
 		};
 
 		modal.type === "add"
-			? levelsService
+			? wordsService
 					.add(data)
 					.then((res) => {
 						setModal(defStateModal);
 						getData();
 					})
 					.catch((e) => console.log(e))
-			: levelsService
+			: wordsService
 					.edit(modal.data._id, data)
 					.then((res) => {
 						setModal(defStateModal);
@@ -67,7 +67,7 @@ const Levels = () => {
 	};
 
 	const delItem = () => {
-		levelsService.del(modal.delId).then((res) => {
+		wordsService.del(modal.delId).then((res) => {
 			setModal((prev) => ({ ...prev, showDel: false }));
 
 			getData();
@@ -77,8 +77,8 @@ const Levels = () => {
 	if (loading) return <Loading />;
 
 	return (
-		<div className={st.levels}>
-			<div className={st.levels__manipulations}>
+		<div className={st.words}>
+			<div className={st.words__manipulations}>
 				<CustomSelect
 					title="Limit:"
 					options={[
@@ -118,7 +118,7 @@ const Levels = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{data.levels.map((item, i) => (
+							{data.words.map((item, i) => (
 								<tr>
 									<td>{(page - 1) * +limit + i + 1}</td>
 									<td>{item.name}</td>
@@ -163,7 +163,7 @@ const Levels = () => {
 
 			<Modal show={modal.show} onHide={() => setModal(defStateModal)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Levels {modal.type}</Modal.Title>
+					<Modal.Title>words {modal.type}</Modal.Title>
 				</Modal.Header>
 				<form onSubmit={onSave}>
 					<Modal.Body>
@@ -229,4 +229,4 @@ const Levels = () => {
 	);
 };
 
-export default Levels;
+export default Words;
