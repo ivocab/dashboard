@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../routes";
-import { SetAuth } from "../../store/auth";
+import { LogOut } from "../../store/auth";
 import { burgerMenu, ivocab, ivocabDesc, ivocabText, logo } from "../icons";
 import st from "./sidebar.module.scss";
 
@@ -14,6 +14,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 				link: RouteNames.HOME,
 				func: () => {
 					navigate(RouteNames.HOME);
+
+					if (document.body.clientWidth <= 1000) setIsOpen(false);
 				},
 			},
 			{
@@ -21,6 +23,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 				link: "/users",
 				func: () => {
 					navigate(RouteNames.USERS);
+
+					if (document.body.clientWidth <= 1000) setIsOpen(false);
 				},
 			},
 			{
@@ -28,6 +32,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 				link: "/levels",
 				func: () => {
 					navigate(RouteNames.LEVELS);
+
+					if (document.body.clientWidth <= 1000) setIsOpen(false);
 				},
 			},
 			{
@@ -35,6 +41,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 				link: "/words",
 				func: () => {
 					navigate(RouteNames.WORDS);
+
+					if (document.body.clientWidth <= 1000) setIsOpen(false);
 				},
 			},
 			{
@@ -45,16 +53,16 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 				title: "Log out",
 				link: "/logout",
 				func: () => {
-					dispatch(SetAuth(false));
-					localStorage.removeItem("isAuth");
-					navigate(RouteNames.HOME);
+					dispatch(LogOut(false));
+					localStorage.removeItem("isLocalAuth");
+					navigate(RouteNames.LOGIN);
 				},
 			},
 		];
 
 	// { userInfo } = useSelector((state) => state.auth);
 	return (
-		<div className={`${st.sidebar} ${!isOpen ? st.sidebar__noactive : null}`}>
+		<div className={`${st.sidebar} ${!isOpen ? st.sidebar__unactive : null}`}>
 			<div className={st.sidebar__header}>
 				<span className={st.sidebar__header__logo}>
 					{ivocab}

@@ -10,4 +10,10 @@
 		left: 50%;
 		transform: translate(-50%, 0);
 	}
+
+	&__button {
+		width: 10px;
+		height: 10px;
+		margin-left: 10px;
+	}
 }

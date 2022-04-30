@@ -3,17 +3,17 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { burgerMenu } from "../icons";
 import st from "./header.module.scss";
 
-const Header = () => {
+const Header = ({ setIsOpen }) => {
 	const [location, setLocation] = useState(""),
 		navigate = useLocation();
 
 	useEffect(() => {
-		setLocation(navigate.pathname.slice(1).toLocaleUpperCase());
+		setLocation(navigate.pathname.slice(1, 7).toLocaleUpperCase());
 	}, [navigate]);
 
 	return (
 		<div className={st.header}>
-			<span>{burgerMenu}</span>
+			<span onClick={() => setIsOpen((prev) => !prev)}>{burgerMenu}</span>
 			<h1>{location}</h1>
 		</div>
 	);

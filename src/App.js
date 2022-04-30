@@ -4,49 +4,51 @@ import AppRouter from "./components/AppRouter";
 import Sidebar from "./components/sidebar";
 import st from "./app.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { SetAuth } from "./store/auth";
+import { SetAuth, SetLocalAuth } from "./store/auth";
 import Loading from "./components/loading";
 import Header from "./components/header";
+import Login from "./pages/login";
 
 function App() {
 	const [loading, setLoading] = useState(true),
 		[isOpen, setIsOpen] = useState(true),
-		{ isLocalAuth } = useSelector((state) => state.auth),
+		{ isAuth, isLocalAuth } = useSelector((state) => state.auth),
 		dispatch = useDispatch();
 
 	const Conf = () => {
 		const conf = window.prompt("Введите пароль: ");
 		if (conf === "Acer9963*") {
-			dispatch(SetAuth(true));
+			dispatch(SetLocalAuth(true));
 			localStorage.setItem("isLocalAuth", true);
-			setTimeout(() => {
-				setLoading(false);
-			}, 250);
+			setLoading(false);
 		} else Conf();
 	};
 
 	useEffect(() => {
 		if (localStorage.getItem("isLocalAuth")?.length) {
-			setTimeout(() => {
-				setLoading(false);
-			}, 250);
-			dispatch(SetAuth(true));
+			if (localStorage.getItem("token")?.length) {
+				dispatch(SetAuth(true, localStorage.getItem("token")));
+			} else {
+				setTimeout(() => {
+					setLoading(false);
+				}, 250);
+				dispatch(SetLocalAuth(true));
+			}
 		} else Conf();
 	}, []);
 
-	if (loading) return <Loading />;
+	if (loading && !isLocalAuth) return <Loading />;
+	else if (isLocalAuth && !isAuth) return <Login />;
 
-	if (isLocalAuth)
-		return (
-			<div className={st.home}>
-				<Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
-				<div className={st.home__right}>
-					<Header />
-					<AppRouter />
-				</div>
+	return (
+		<div className={st.home}>
+			<Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+			<div className={`${st.home__right} ${!isOpen ? st.home__right__unactive : null}`}>
+				<Header setIsOpen={setIsOpen} />
+				<AppRouter />
 			</div>
-		);
-	return <AppRouter />;
+		</div>
+	);
 }
 
 export default App;

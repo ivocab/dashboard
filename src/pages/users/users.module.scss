@@ -9,6 +9,8 @@
 	}
 
 	table {
+		min-width: 700px;
+
 		div {
 			display: flex;
 			align-items: center;
@@ -33,11 +35,13 @@
 	&__header {
 		display: flex;
 		justify-content: space-between;
+		flex-wrap: wrap;
 		margin-bottom: 20px;
 
 		&__info {
 			display: flex;
 			align-items: center;
+			width: fit-content !important;
 
 			img {
 				width: 80px;
@@ -52,9 +56,27 @@
 				margin-bottom: 5px;
 			}
 		}
+
+		button {
+			width: 200px;
+		}
 	}
 
 	div {
 		width: 80%;
+	}
+
+	@media (max-width: 770px) {
+		div {
+			width: 100%;
+		}
+	}
+
+	@media (max-width: 550px) {
+		div {
+			table {
+				min-width: 500px;
+			}
+		}
 	}
 }

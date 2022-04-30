@@ -1,8 +1,9 @@
 .sidebar {
 	width: 250px;
-	// position: fixed;
 	height: 100vh;
 	overflow-y: scroll;
+	position: relative;
+	z-index: 2;
 
 	&::-webkit-scrollbar {
 		width: 0;
@@ -67,6 +68,22 @@
 				background-color: rgba(76, 57, 193, 0.65);
 				color: #1bcfe7;
 			}
+		}
+	}
+
+	&__unactive {
+		display: none;
+	}
+
+	@media (max-width: 1000px) {
+		width: 250px;
+		display: block !important;
+		transition: all 0.2s ease;
+
+		&__unactive {
+			width: 0;
+
+			transform: translateX(-400px);
 		}
 	}
 }

@@ -121,10 +121,10 @@ const Levels = () => {
 							{data.levels.map((item, i) => (
 								<tr>
 									<td>{(page - 1) * +limit + i + 1}</td>
-									<td>{item.name}</td>
-									<td className="text-center">{item.markForMin}</td>
-									<td className="text-center">{item.mark}</td>
-									<td className="text-center">
+									<td className="text-nowrap">{item.name}</td>
+									<td className="text-center text-nowrap">{item.markForMin}</td>
+									<td className="text-center text-nowrap">{item.mark}</td>
+									<td className="text-center text-nowrap">
 										{item.accessMark.min}-{item.accessMark.max}
 									</td>
 									<td>

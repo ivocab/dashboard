@@ -6,6 +6,9 @@
 	color: #141272;
 	border: 0;
 	transition: all 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	&:hover {
 		background-color: #5643ce;

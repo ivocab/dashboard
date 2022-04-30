@@ -44,7 +44,7 @@ const User = () => {
 						{data?.username ? <h4>{data.username}</h4> : null}
 					</div>
 				</div>
-				<CustomButton title="Back" onClick={() => navigate("/users")} />
+				<CustomButton title="Back" onClick={() => navigate("/users")} className="mt-2" />
 			</div>
 			<CustomTable
 				table={
