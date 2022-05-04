@@ -33,17 +33,13 @@ const Users = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		usersService
-			.get(`_page=1&_limit=100000000&_sort=asc`)
-			.then((res) => {
-				const data = GeneralSort(res.data.data.users);
+		usersService.get(`_page=1&_limit=100000000&_sort=asc`).then((res) => {
+			const data = GeneralSort(res.data.data.users);
 
-				setData({ ...res.data.data, users: data });
-				setLoading(false);
-			})
-			.catch((e) => {
-				// DelToken(navigate, dispatch);
-			});
+			setData({ ...res.data.data, users: data });
+			setLoading(false);
+		});
+		// .catch((e) => DelToken(navigate, dispatch));
 	}, []);
 
 	// useEffect(() => {

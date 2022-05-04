@@ -35,5 +35,6 @@ export const GeneralSort = (data) => {
 export const DelToken = (navigate, dispatch) => {
 	localStorage.removeItem("token");
 	dispatch(LogOut());
+	navigate("/login");
 	return null;
 };
