@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/customButton";
 import CustomInput from "../../components/customInput";
@@ -9,7 +10,7 @@ import { del, edit } from "../../components/icons";
 import Loading from "../../components/loading";
 import Pagination from "../../components/pagination";
 import { usersService } from "../../services/usersService";
-import { BeautyFullTime, JamesSort } from "../../utils";
+import { BeautyFullTime, DelToken, GeneralSort } from "../../utils";
 import st from "./users.module.scss";
 
 const Users = () => {
@@ -18,6 +19,7 @@ const Users = () => {
 		[page, setPage] = useState(1),
 		[limit, setLimit] = useState(10),
 		navigate = useNavigate(),
+		dispatch = useDispatch(),
 		defStateModal = {
 			show: false,
 			showDel: false,
@@ -31,11 +33,17 @@ const Users = () => {
 
 	useEffect(() => {
 		setLoading(true);
-		usersService.get(`_page=1&_limit=100000000&_sort=asc`).then((res) => {
-			console.log(JamesSort(res.data.data.users));
-			setData(res.data.data);
-			setLoading(false);
-		});
+		usersService
+			.get(`_page=1&_limit=100000000&_sort=asc`)
+			.then((res) => {
+				const data = GeneralSort(res.data.data.users);
+
+				setData({ ...res.data.data, users: data });
+				setLoading(false);
+			})
+			.catch((e) => {
+				// DelToken(navigate, dispatch);
+			});
 	}, []);
 
 	// useEffect(() => {
@@ -114,9 +122,9 @@ const Users = () => {
 									<td className="text-center">{item.level}</td>
 									<td className="text-center">{item.language}</td>
 									<td className="text-center">{item.score}</td>
-									<td className="text-center">{/*item.score*/} place</td>
+									<td className="text-center">{item.place}</td>
 									<td className="text-center">
-										{BeautyFullTime(item.updatedAt)}
+										{item.lastVisit.toString().slice(0, 24)}
 									</td>
 									<td>
 										<div>
