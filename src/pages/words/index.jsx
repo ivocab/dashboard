@@ -4,14 +4,17 @@ import CustomButton from "../../components/customButton";
 import CustomInput from "../../components/customInput";
 import CustomSelect from "../../components/customSelect";
 import CustomTable from "../../components/customTable";
-import { del, edit, voice } from "../../components/icons";
+import { del, edit, voiceIcon } from "../../components/icons";
 import Loading from "../../components/loading";
 import Pagination from "../../components/pagination";
+import UploadFile from "../../components/uploadFile";
+import { levelsService } from "../../services/levelsService";
 import { wordsService } from "../../services/wordsService";
 import st from "./words.module.scss";
 
 const Words = () => {
 	const [data, setData] = useState([]),
+		[levelsData, setLevelsData] = useState([]),
 		[loading, setLoading] = useState(true),
 		[page, setPage] = useState(1),
 		[limit, setLimit] = useState(10),
@@ -20,6 +23,8 @@ const Words = () => {
 			showDel: false,
 			type: "add",
 		},
+		[voice, setVoice] = useState(""),
+		[image, setImage] = useState(""),
 		[modal, setModal] = useState(defStateModal);
 
 	const getData = () => {
@@ -28,6 +33,12 @@ const Words = () => {
 		wordsService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
 			setData(res.data.data);
 			setLoading(false);
+
+			levelsService.get(`_page=1&_limit=100&_sort=asc`).then((res) => {
+				setLevelsData(
+					res.data.data.levels.map((item) => ({ title: item.name, value: item._id }))
+				);
+			});
 		});
 	};
 
@@ -38,32 +49,40 @@ const Words = () => {
 	const onSave = (e) => {
 		e.preventDefault();
 
-		const data = {
-			name: e.target[0].value,
-			markForMin: +e.target[1].value,
-			mark: +e.target[2].value,
-			accessMark: {
-				min: +e.target[3].value,
-				max: +e.target[4].value,
-			},
-			status: "active",
-		};
+		console.log(e);
 
-		modal.type === "add"
-			? wordsService
-					.add(data)
-					.then((res) => {
-						setModal(defStateModal);
-						getData();
-					})
-					.catch((e) => console.log(e))
-			: wordsService
-					.edit(modal.data._id, data)
-					.then((res) => {
-						setModal(defStateModal);
-						getData();
-					})
-					.catch((e) => console.log(e));
+		if (voice.length && image.length) {
+			const data = {
+				name: e.target[0].value,
+				class: e.target[1].value,
+				transcript: e.target[2].value,
+				translationRu: e.target[3].value,
+				translationUz: e.target[4].value,
+				level: e.target[5].value,
+				description: e.target[8].value,
+				example: e.target[9].value,
+				exampleRu: e.target[10].value,
+				exampleUz: e.target[11].value,
+				image: image,
+				voice: voice,
+			};
+
+			modal.type === "add"
+				? wordsService
+						.add(data)
+						.then((res) => {
+							setModal(defStateModal);
+							getData();
+						})
+						.catch((e) => console.log(e))
+				: wordsService
+						.edit(modal.data._id, data)
+						.then((res) => {
+							setModal(defStateModal);
+							getData();
+						})
+						.catch((e) => console.log(e));
+		}
 	};
 
 	const delItem = () => {
@@ -112,6 +131,7 @@ const Words = () => {
 								<th>id</th>
 								<th>Image</th>
 								<th>Name</th>
+								<th className="text-nowrap">Part of</th>
 								<th className="text-center text-nowrap">Transcription</th>
 								<th className="text-center text-nowrap">Voice</th>
 								<th className="text-center text-nowrap">Translation RU</th>
@@ -132,6 +152,7 @@ const Words = () => {
 										<img src={item.image.url} />
 									</td>
 									<td>{item.name}</td>
+									<td className="text-center">{item.class}</td>
 									<td className="text-center">[{item.transcript}]</td>
 									<td
 										className="text-center"
@@ -139,7 +160,7 @@ const Words = () => {
 											let audio = new Audio(item.voice.url);
 											audio.play();
 										}}>
-										{voice}
+										{voiceIcon}
 									</td>
 									<td className="text-center">{item.translationRu}</td>
 									<td className="text-center">{item.translationUz}</td>
@@ -181,43 +202,92 @@ const Words = () => {
 			/>
 
 			<Pagination page={page} limit={limit} total={data.total} setPage={setPage} />
-
-			<Modal show={modal.show} onHide={() => setModal(defStateModal)}>
+			<Modal show={modal.show} size="lg" onHide={() => setModal(defStateModal)}>
 				<Modal.Header closeButton>
-					<Modal.Title>words {modal.type}</Modal.Title>
+					<Modal.Title>Words {modal.type}</Modal.Title>
 				</Modal.Header>
-				<form onSubmit={onSave}>
+				<form onSubmit={onSave} className={st.words__form}>
 					<Modal.Body>
-						<CustomInput
-							type="text"
-							defVal={modal?.data?.name}
-							title="Name:"
-							placeholder="Beginer"
-						/>
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.markForMin}
-							title="Mark for 60sec:"
-							placeholder="100"
-						/>
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.mark}
-							title="Mark:"
-							placeholder="10"
-						/>
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.accessMark?.min}
-							title="Access mark min:"
-							placeholder="0"
-						/>
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.accessMark?.max}
-							title="Access mark max:"
-							placeholder="1999"
-						/>
+						<div className={st.words__form__inputs}>
+							<div className={st.words__form__inputs__left}>
+								<CustomInput
+									type="text"
+									defVal={modal?.data?.name}
+									title="Name:"
+									placeholder="Apple"
+								/>
+								<CustomInput
+									type="text"
+									defVal={modal?.data?.class}
+									title="Part of:"
+									placeholder="n., v., adj."
+								/>
+								<CustomInput
+									type="text"
+									defVal={modal?.data?.transcript}
+									title="Transcription:"
+									placeholder="ˈæp(ə)l"
+								/>
+								<CustomInput
+									type="text"
+									defVal={modal?.data?.translationRu}
+									title="Translation Ru:"
+									placeholder="Яблоко"
+								/>
+								<CustomInput
+									type="text"
+									defVal={modal?.data?.translationUz}
+									title="Translation Uz:"
+									placeholder="Olma"
+								/>
+								<CustomSelect
+									title="Level:"
+									options={levelsData}
+									value={modal?.data?.level?._id}
+								/>
+							</div>
+							<div className={st.words__form__inputs__voice}>
+								<UploadFile
+									defFile={modal?.data?.voice}
+									title="Voice"
+									type="music"
+									setValue={setVoice}
+								/>
+							</div>
+							<div className={st.words__form__inputs__image}>
+								<UploadFile
+									defFile={modal?.data?.image}
+									title="Image"
+									setValue={setImage}
+								/>
+							</div>
+						</div>
+						<div className={st.words__form__footer}>
+							<CustomInput
+								type="text"
+								defVal={modal?.data?.description}
+								title="Description:"
+								placeholder="An apple is a fruit"
+							/>
+							<CustomInput
+								type="text"
+								defVal={modal?.data?.example}
+								title="Example:"
+								placeholder="I have two apples."
+							/>
+							<CustomInput
+								type="text"
+								defVal={modal?.data?.exampleRu}
+								title="Example Ru:"
+								placeholder="У меня есть два яблока."
+							/>
+							<CustomInput
+								type="text"
+								defVal={modal?.data?.exampleUz}
+								title="Example Uz:"
+								placeholder="Menda ikkita olma bor."
+							/>
+						</div>
 					</Modal.Body>
 					<Modal.Footer>
 						<CustomButton
@@ -230,7 +300,6 @@ const Words = () => {
 					</Modal.Footer>
 				</form>
 			</Modal>
-
 			<Modal show={modal.showDel} onHide={() => setModal(defStateModal)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Are you sure?</Modal.Title>

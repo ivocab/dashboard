@@ -27,11 +27,7 @@ const Users = () => {
 		},
 		[modal, setModal] = useState(defStateModal);
 
-	// const getData = () => {
-	// 	setLoading(true);
-	// };
-
-	useEffect(() => {
+	const getData = () => {
 		setLoading(true);
 		usersService.get(`_page=1&_limit=100000000&_sort=asc`).then((res) => {
 			const data = GeneralSort(res.data.data.users);
@@ -40,11 +36,11 @@ const Users = () => {
 			setLoading(false);
 		});
 		// .catch((e) => DelToken(navigate, dispatch));
-	}, []);
+	};
 
-	// useEffect(() => {
-	// 	getData();
-	// }, [page, limit]);
+	useEffect(() => {
+		getData();
+	}, []);
 
 	const onSave = (e) => {
 		e.preventDefault();
@@ -66,7 +62,7 @@ const Users = () => {
 		usersService.del(modal.delId).then((res) => {
 			setModal((prev) => ({ ...prev, showDel: false }));
 
-			// getData();
+			getData();
 		});
 	};
 
@@ -112,7 +108,7 @@ const Users = () => {
 						</thead>
 						<tbody>
 							{data.users.map((item, i) => (
-								<tr onClick={() => navigate(`/users/${item._id}`)}>
+								<tr onDoubleClick={() => navigate(`/users/${item._id}`)}>
 									<td>{(page - 1) * +limit + i + 1}</td>
 									<td>{item.name}</td>
 									<td className="text-center">{item.level}</td>
