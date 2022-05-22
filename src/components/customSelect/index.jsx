@@ -10,8 +10,7 @@ const CustomSelect = ({ title, options, className, value, setValue }) => {
 					<option
 						key={option.title}
 						value={option.value}
-						selected={+value === option.value ? "selected" : ""}
-					>
+						selected={value == option.value ? "selected" : ""}>
 						{option.title}
 					</option>
 				))}

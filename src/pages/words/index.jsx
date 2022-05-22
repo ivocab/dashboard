@@ -4,7 +4,7 @@ import CustomButton from "../../components/customButton";
 import CustomInput from "../../components/customInput";
 import CustomSelect from "../../components/customSelect";
 import CustomTable from "../../components/customTable";
-import { del, edit, voiceIcon } from "../../components/icons";
+import { del, edit, plus, voiceIcon } from "../../components/icons";
 import Loading from "../../components/loading";
 import Pagination from "../../components/pagination";
 import UploadFile from "../../components/uploadFile";
@@ -25,7 +25,9 @@ const Words = () => {
 		},
 		[voice, setVoice] = useState(""),
 		[image, setImage] = useState(""),
-		[modal, setModal] = useState(defStateModal);
+		[modal, setModal] = useState(defStateModal),
+		[variants, setVariants] = useState([]),
+		[searchedData, setSearchedData] = useState([{ title: "Select...", value: "123" }]);
 
 	const getData = () => {
 		setLoading(true);
@@ -33,12 +35,14 @@ const Words = () => {
 		wordsService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
 			setData(res.data.data);
 			setLoading(false);
+		});
+	};
 
-			levelsService.get(`_page=1&_limit=100&_sort=asc`).then((res) => {
-				setLevelsData(
-					res.data.data.levels.map((item) => ({ title: item.name, value: item._id }))
-				);
-			});
+	const searchData = (name) => {
+		wordsService.get(`name=${name}`).then((res) => {
+			const temp = [];
+			res.data.data.words.map((data) => temp.push({ title: data.name, value: data._id }));
+			setSearchedData([{ title: "Select...", value: "123" }, ...temp]);
 		});
 	};
 
@@ -46,12 +50,18 @@ const Words = () => {
 		getData();
 	}, [page, limit]);
 
+	useEffect(() => {
+		levelsService.get(`_page=1&_limit=100&_sort=asc`).then((res) => {
+			setLevelsData(
+				res.data.data.levels.map((item) => ({ title: item.name, value: item._id }))
+			);
+		});
+	}, []);
+
 	const onSave = (e) => {
 		e.preventDefault();
 
-		console.log(e);
-
-		if (voice.length && image.length) {
+		if (voice.length && image.length && variants.length === 3) {
 			const data = {
 				name: e.target[0].value,
 				class: e.target[1].value,
@@ -59,12 +69,13 @@ const Words = () => {
 				translationRu: e.target[3].value,
 				translationUz: e.target[4].value,
 				level: e.target[5].value,
-				description: e.target[8].value,
-				example: e.target[9].value,
-				exampleRu: e.target[10].value,
-				exampleUz: e.target[11].value,
+				description: e.target[10].value,
+				example: e.target[11].value,
+				exampleRu: e.target[12].value,
+				exampleUz: e.target[13].value,
 				image: image,
 				voice: voice,
+				variants: variants.map((item) => item.value),
 			};
 
 			modal.type === "add"
@@ -132,6 +143,7 @@ const Words = () => {
 								<th>Image</th>
 								<th>Name</th>
 								<th className="text-nowrap">Part of</th>
+								<th className="text-center text-nowrap">Variants</th>
 								<th className="text-center text-nowrap">Transcription</th>
 								<th className="text-center text-nowrap">Voice</th>
 								<th className="text-center text-nowrap">Translation RU</th>
@@ -153,7 +165,10 @@ const Words = () => {
 									</td>
 									<td>{item.name}</td>
 									<td className="text-center">{item.class}</td>
-									<td className="text-center">[{item.transcript}]</td>
+									<td className="text-center">
+										{item.variants.length ? "yes" : "no"}
+									</td>
+									<td className="text-center text-nowrap">[{item.transcript}]</td>
 									<td
 										className="text-center"
 										onClick={() => {
@@ -172,14 +187,21 @@ const Words = () => {
 									<td>
 										<div>
 											<span
-												onClick={() =>
+												onClick={() => {
 													setModal((prev) => ({
 														...prev,
 														show: true,
 														type: "edit",
 														data: item,
-													}))
-												}>
+													}));
+													if (item?.variants)
+														setVariants(
+															item.variants.map((item) => ({
+																title: item.name,
+																value: item._id,
+															}))
+														);
+												}}>
 												{edit}
 											</span>
 											<span
@@ -263,6 +285,52 @@ const Words = () => {
 							</div>
 						</div>
 						<div className={st.words__form__footer}>
+							<table className={st.words__form__footer__variants}>
+								<tr>
+									<th>Variants</th>
+
+									<th>
+										<div>
+											<CustomInput title="Search" setVal={searchData} />
+										</div>
+									</th>
+									<th>Action</th>
+								</tr>
+								<tr>
+									<td>Search</td>
+									<td>
+										<CustomSelect
+											title="Select"
+											value={"123"}
+											options={searchedData}
+											setValue={(e) => {
+												const temp = searchedData.find(
+													(item) => item.value === e
+												);
+												setVariants((prev) => [...prev, temp]);
+											}}
+										/>
+									</td>
+									<td></td>
+								</tr>
+								{variants?.map((variant, i) => (
+									<tr>
+										<td>{i + 1}</td>
+										<td>{variant?.title}</td>
+										<td>
+											<span
+												onClick={() => {
+													const temp = variants.filter(
+														(item) => item.value !== variant.value
+													);
+													setVariants(temp);
+												}}>
+												{del}
+											</span>
+										</td>
+									</tr>
+								))}
+							</table>
 							<CustomInput
 								type="text"
 								defVal={modal?.data?.description}
@@ -288,6 +356,7 @@ const Words = () => {
 								placeholder="Menda ikkita olma bor."
 							/>
 						</div>
+						<Modal show={modal.variants} style={{ zIndex: 2000 }}></Modal>
 					</Modal.Body>
 					<Modal.Footer>
 						<CustomButton

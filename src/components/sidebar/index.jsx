@@ -56,6 +56,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 					dispatch(LogOut(false));
 					localStorage.removeItem("isLocalAuth");
 					navigate(RouteNames.LOGIN);
+					window.location.reload();
 				},
 			},
 		];

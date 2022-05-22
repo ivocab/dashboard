@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/customButton";
 import CustomInput from "../../components/customInput";
 import { authService } from "../../services/auth";
@@ -9,7 +8,6 @@ import st from "./login.module.scss";
 
 const Login = () => {
 	const dispatch = useDispatch(),
-		navigate = useNavigate(),
 		[loading, setLoading] = useState(false),
 		[err, setErr] = useState(false);
 
@@ -30,7 +28,7 @@ const Login = () => {
 					setLoading(false);
 					localStorage.setItem("token", res.data.data.token);
 					dispatch(SetAuth(true, res.data.data.token));
-					navigate("/");
+					window.location.assign("/");
 				}
 			})
 			.catch((e) => {

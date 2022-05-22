@@ -141,6 +141,15 @@ export const edit = (
 	</svg>
 );
 
+export const plus = (
+	<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+		<path
+			d="M4.95455 11.8068V0.556818H6.86364V11.8068H4.95455ZM0.284091 7.13636V5.22727H11.5341V7.13636H0.284091Z"
+			fill="#141272"
+		/>
+	</svg>
+);
+
 export const chevron = (
 	<svg xmlns="http://www.w3.org/2000/svg" width="12" height="18" viewBox="0 0 12 18" fill="none">
 		<line
