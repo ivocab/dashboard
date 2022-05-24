@@ -15,9 +15,11 @@ import st from "./users.module.scss";
 
 const Users = () => {
 	const [data, setData] = useState([]),
+		[defData, setDefData] = useState([]),
 		[loading, setLoading] = useState(true),
 		[page, setPage] = useState(1),
-		[limit, setLimit] = useState(10),
+		[limit, setLimit] = useState(10000000),
+		[sort, setSort] = useState("best"),
 		navigate = useNavigate(),
 		dispatch = useDispatch(),
 		defStateModal = {
@@ -30,7 +32,8 @@ const Users = () => {
 	const getData = () => {
 		setLoading(true);
 		usersService.get(`_page=1&_limit=100000000&_sort=asc`).then((res) => {
-			const data = GeneralSort(res.data.data.users);
+			setDefData(res.data.data);
+			const data = GeneralSort(res.data.data.users, sort);
 
 			setData({ ...res.data.data, users: data });
 			setLoading(false);
@@ -41,6 +44,13 @@ const Users = () => {
 	useEffect(() => {
 		getData();
 	}, []);
+
+	const onSort = (e) => {
+		setSort(e);
+		setLoading(true);
+		setData({ ...defData, users: GeneralSort(defData.users, e) });
+		setLoading(false);
+	};
 
 	const onSave = (e) => {
 		e.preventDefault();
@@ -71,6 +81,30 @@ const Users = () => {
 	return (
 		<div className={st.users}>
 			<div className={st.users__manipulations}>
+				<CustomSelect
+					title="Sort:"
+					options={[
+						{
+							title: "Best",
+							value: "best",
+						},
+						{
+							title: "Lowest",
+							value: "lowest",
+						},
+						{
+							title: "Last visit",
+							value: "last",
+						},
+						{
+							title: "First visit",
+							value: "first",
+						},
+					]}
+					value={sort}
+					setValue={onSort}
+					className="me-3"
+				/>
 				<CustomSelect
 					title="Limit:"
 					options={[
@@ -111,8 +145,8 @@ const Users = () => {
 								<tr onDoubleClick={() => navigate(`/users/${item._id}`)}>
 									<td>{(page - 1) * +limit + i + 1}</td>
 									<td>{item.name}</td>
-									<td className="text-center">{item.level}</td>
-									<td className="text-center">{item.language}</td>
+									<td className="text-center">{item?.level?.name}</td>
+									<td className="text-center">{item?.language}</td>
 									<td className="text-center">{item.score}</td>
 									<td className="text-center">{item.place}</td>
 									<td className="text-center">

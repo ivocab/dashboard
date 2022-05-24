@@ -55,7 +55,7 @@ const User = () => {
 						</tr>
 						<tr>
 							<th>Level</th>
-							<td>{data.level}</td>
+							<td>{data?.level}</td>
 						</tr>
 						<tr>
 							<th>Learned Words</th>
