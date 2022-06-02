@@ -69,6 +69,7 @@ const Home = () => {
 				const last5 = calculatePeriod(data, 300000).data;
 
 				setChartData({
+					period: last5,
 					data: [
 						{
 							category: `${BeautyFullDay(new Date(today - 300000)).slice(
@@ -109,6 +110,7 @@ const Home = () => {
 				const last10 = calculatePeriod(data, 600000).data;
 
 				setChartData({
+					period: last10,
 					data: [
 						{
 							category: `${BeautyFullDay(new Date(today - 600000)).slice(
@@ -149,6 +151,7 @@ const Home = () => {
 				const last30 = calculatePeriod(data, 1800000).data;
 
 				setChartData({
+					period: last30,
 					data: [
 						{
 							category: `${BeautyFullDay(new Date(today - 1800000)).slice(
@@ -197,6 +200,7 @@ const Home = () => {
 				const lastday = calculatePeriod(data, 86400000).data;
 
 				setChartData({
+					period: lastday,
 					data: [
 						{
 							category: `${BeautyFullDay(new Date(today - 86400000)).slice(
@@ -302,6 +306,7 @@ const Home = () => {
 				const lastday = calculatePeriod(data, 172800000).data;
 
 				setChartData({
+					period: lastday,
 					data: [
 						{
 							category: `${BeautyFullDay(new Date(today - 172800000)).slice(
@@ -407,6 +412,7 @@ const Home = () => {
 				const lastday = calculatePeriod(data, 604800000).data;
 
 				setChartData({
+					period: lastday,
 					data: [
 						{
 							category: `${BeautyFullDay(new Date(today - 604800000)).slice(
@@ -465,6 +471,7 @@ const Home = () => {
 				const lastday = calculatePeriod(data, 1209600000).data;
 
 				setChartData({
+					period: lastday,
 					data: [
 						{
 							category: `${BeautyFullDay(new Date(today - 1209600000)).slice(
@@ -484,10 +491,10 @@ const Home = () => {
 								.count,
 						},
 						{
-							category: `${BeautyFullDay(new Date(today - 432000000)).slice(
+							category: `${BeautyFullDay(new Date(today - 864000000)).slice(
 								5
-							)} - ${BeautyFullDay(new Date(today - 864000000)).slice(5)}`,
-							value: calculatePeriod(lastday, 432000000, new Date(today - 864000000))
+							)} - ${BeautyFullDay(new Date(today - 691201000)).slice(5)}`,
+							value: calculatePeriod(lastday, 864000000, new Date(today - 691201000))
 								.count,
 						},
 						{
@@ -523,11 +530,108 @@ const Home = () => {
 				break;
 			}
 			case "last-month": {
-				calculatePeriod(2592000000);
+				const lastday = calculatePeriod(data, 2419200000).data;
+
+				setChartData({
+					period: lastday,
+					data: [
+						{
+							category: `${BeautyFullDay(new Date(today - 2419200000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 1935361000)).slice(5)}`,
+							value: calculatePeriod(
+								lastday,
+								2419200000,
+								new Date(today - 1935361000)
+							).count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 1935360000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 1451521000)).slice(5)}`,
+							value: calculatePeriod(
+								lastday,
+								1935360000,
+								new Date(today - 1451521000)
+							).count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 1451520000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 967681000)).slice(5)}`,
+							value: calculatePeriod(lastday, 1451520000, new Date(today - 967681000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 967680000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 483841000)).slice(5)}`,
+							value: calculatePeriod(lastday, 967680000, new Date(today - 483841000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 483840000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today)).slice(5)}`,
+							value: calculatePeriod(lastday, 483840000, today).count,
+						},
+					],
+					count: lastday.length,
+				});
 				break;
 			}
 			case "last-2months": {
-				calculatePeriod(5184000000);
+				const lastday = calculatePeriod(data, 4838400000).data;
+
+				setChartData({
+					period: lastday,
+					data: [
+						{
+							category: `${BeautyFullDay(new Date(today - 4838400000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 3870721000)).slice(5)}`,
+							value: calculatePeriod(
+								lastday,
+								4838400000,
+								new Date(today - 3870721000)
+							).count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 3870720000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 2903041000)).slice(5)}`,
+							value: calculatePeriod(
+								lastday,
+								3870720000,
+								new Date(today - 2903041000)
+							).count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 2903040000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 1935361000)).slice(5)}`,
+							value: calculatePeriod(
+								lastday,
+								2903040000,
+								new Date(today - 1935361000)
+							).count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 1935360000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 967681000)).slice(5)}`,
+							value: calculatePeriod(lastday, 1935360000, new Date(today - 967681000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 967680000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today)).slice(5)}`,
+							value: calculatePeriod(lastday, 967680000, today).count,
+						},
+					],
+					count: lastday.length,
+				});
 				break;
 			}
 		}
@@ -543,6 +647,7 @@ const Home = () => {
 		<div className={st.home}>
 			<div className={st.home__manipulations}>
 				<h4>{BeautyFullDay(today)}</h4>
+				{console.log(chartData)}
 				<CustomSelect
 					title="Sort:"
 					options={[
@@ -591,6 +696,41 @@ const Home = () => {
 			</div>
 			<h5>Count: {chartData.count}</h5>
 			{!load ? <Chart data={chartData.data} /> : console.log("loading")}
+			<br />
+			{chartData.period.length ? (
+				<CustomTable
+					table={
+						<table>
+							<thead>
+								<tr>
+									<th>id</th>
+									<th>Name</th>
+									<th className="text-center">Level</th>
+									<th className="text-center">Lang</th>
+									<th className="text-center">Mark</th>
+									<th className="text-center">Place</th>
+									<th className="text-center">Last visit</th>
+								</tr>
+							</thead>
+							<tbody>
+								{chartData.period.map((item, i) => (
+									<tr>
+										<td>{i + 1}</td>
+										<td>{item.name}</td>
+										<td className="text-center">{item?.level?.name}</td>
+										<td className="text-center">{item?.language}</td>
+										<td className="text-center">{item.score}</td>
+										<td className="text-center">{item.place}</td>
+										<td className="text-center">
+											{item.lastVisit.toString().slice(0, 24)}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					}
+				/>
+			) : null}
 		</div>
 	);
 };
