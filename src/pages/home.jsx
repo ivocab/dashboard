@@ -299,15 +299,227 @@ const Home = () => {
 				break;
 			}
 			case "last-2days": {
-				calculatePeriod(172800000);
+				const lastday = calculatePeriod(data, 172800000).data;
+
+				setChartData({
+					data: [
+						{
+							category: `${BeautyFullDay(new Date(today - 172800000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 158401000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 172800000, new Date(today - 158401000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 158400000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 144001000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 158400000, new Date(today - 144001000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 144000000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 129601000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 144000000, new Date(today - 129601000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 129600000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 115201000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 129600000, new Date(today - 115201000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 115200000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 100801000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 115200000, new Date(today - 100801000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 100800000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 86401000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 100800000, new Date(today - 86401000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 86400000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 72001000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 86400000, new Date(today - 72001000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 72000000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 57601000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 72000000, new Date(today - 57601000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 57600000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 43201000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 57600000, new Date(today - 43201000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 43200000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 28801000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 43200000, new Date(today - 28801000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 28800000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today - 14401000)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 28800000, new Date(today - 14401000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 14400000)).slice(
+								8,
+								16
+							)} - ${BeautyFullDay(new Date(today)).slice(8, 16)}`,
+							value: calculatePeriod(lastday, 14400000, today).count,
+						},
+					],
+					count: lastday.length,
+				});
 				break;
 			}
 			case "last-week": {
-				calculatePeriod(604800000);
+				const lastday = calculatePeriod(data, 604800000).data;
+
+				setChartData({
+					data: [
+						{
+							category: `${BeautyFullDay(new Date(today - 604800000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 518401000)).slice(5)}`,
+							value: calculatePeriod(lastday, 604800000, new Date(today - 518401000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 518400000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 432001000)).slice(5)}`,
+							value: calculatePeriod(lastday, 518400000, new Date(today - 432001000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 432000000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 345601000)).slice(5)}`,
+							value: calculatePeriod(lastday, 432000000, new Date(today - 345601000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 345600000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 259201000)).slice(5)}`,
+							value: calculatePeriod(lastday, 345600000, new Date(today - 259201000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 259200000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 28801000)).slice(5)}`,
+							value: calculatePeriod(lastday, 259200000, new Date(today - 28801000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 172800000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 86401000)).slice(5)}`,
+							value: calculatePeriod(lastday, 172800000, new Date(today - 86401000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 86400000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today)).slice(5)}`,
+							value: calculatePeriod(lastday, 86400000, today).count,
+						},
+					],
+					count: lastday.length,
+				});
 				break;
 			}
 			case "last-2weeks": {
-				calculatePeriod(1209600000);
+				const lastday = calculatePeriod(data, 1209600000).data;
+
+				setChartData({
+					data: [
+						{
+							category: `${BeautyFullDay(new Date(today - 1209600000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 1036801000)).slice(5)}`,
+							value: calculatePeriod(
+								lastday,
+								1209600000,
+								new Date(today - 1036801000)
+							).count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 1036800000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 864001000)).slice(5)}`,
+							value: calculatePeriod(lastday, 1036800000, new Date(today - 864001000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 432000000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 864000000)).slice(5)}`,
+							value: calculatePeriod(lastday, 432000000, new Date(today - 864000000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 691200000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 518401000)).slice(5)}`,
+							value: calculatePeriod(lastday, 691200000, new Date(today - 518401000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 518400000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 345601000)).slice(5)}`,
+							value: calculatePeriod(lastday, 518400000, new Date(today - 345601000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 345600000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today - 172801000)).slice(5)}`,
+							value: calculatePeriod(lastday, 345600000, new Date(today - 172801000))
+								.count,
+						},
+						{
+							category: `${BeautyFullDay(new Date(today - 172800000)).slice(
+								5
+							)} - ${BeautyFullDay(new Date(today)).slice(5)}`,
+							value: calculatePeriod(lastday, 172800000, today).count,
+						},
+					],
+					count: lastday.length,
+				});
 				break;
 			}
 			case "last-month": {

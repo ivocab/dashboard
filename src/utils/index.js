@@ -12,12 +12,16 @@ export const BeautyFullTime = (num) => {
 	return BeautyDate(num) + " " + BeautyTime(num);
 };
 
+export const BeautyTwo = (num) => {
+	return num > 9 ? num : `0${num}`;
+};
+
 export const BeautyFullDay = (today) => {
-	return `${today.getFullYear()}-${
-		today.getMonth() > 9 ? today.getMonth() + 1 : `0${today.getMonth() + 1}`
-	}-${today.getDate()} ${today.getHours() > 9 ? today.getHours() : `0${today.getHours()}`}:${
-		today.getMinutes() > 9 ? today.getMinutes() : `0${today.getMinutes()}`
-	}:${today.getSeconds() > 9 ? today.getSeconds() : `0${today.getSeconds()}`}`;
+	return `${today.getFullYear()}-${BeautyTwo(today.getMonth() + 1)}-${BeautyTwo(
+		today.getDate()
+	)} ${BeautyTwo(today.getHours())}:${BeautyTwo(today.getMinutes())}:${BeautyTwo(
+		today.getSeconds()
+	)}`;
 };
 
 export const GeneralSort = (data, sort) => {
