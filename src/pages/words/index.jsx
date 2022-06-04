@@ -32,7 +32,7 @@ const Words = () => {
 	const getData = () => {
 		setLoading(true);
 
-		wordsService.get(`_page=${page}&_limit=${limit}&_sort=asc`).then((res) => {
+		wordsService.get(`_page=${page}&_limit=${limit}`).then((res) => {
 			setData(res.data.data);
 			setLoading(false);
 		});
