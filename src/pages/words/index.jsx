@@ -53,7 +53,11 @@ const Words = () => {
 	useEffect(() => {
 		levelsService.get(`_page=1&_limit=100&_sort=asc`).then((res) => {
 			setLevelsData(
-				res.data.data.levels.map((item) => ({ title: item.name, value: item._id }))
+				res.data.data.levels.map((item) => ({
+					title: item.name,
+					value: item._id,
+					mark: item.mark,
+				}))
 			);
 		});
 	}, []);
@@ -69,6 +73,7 @@ const Words = () => {
 				translationRu: e.target[3].value,
 				translationUz: e.target[4].value,
 				level: e.target[5].value,
+				wordMark: levelsData.find((item) => item.value === e.target[5].value).mark,
 				description: e.target[10].value,
 				example: e.target[11].value,
 				exampleRu: e.target[12].value,
