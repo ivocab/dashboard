@@ -147,6 +147,7 @@ const Words = () => {
 								<th>id</th>
 								<th>Image</th>
 								<th>Name</th>
+								<th>Mark</th>
 								<th className="text-nowrap">Part of</th>
 								<th className="text-center text-nowrap">Variants</th>
 								<th className="text-center text-nowrap">Transcription</th>
@@ -169,6 +170,7 @@ const Words = () => {
 										<img src={item.image.url} />
 									</td>
 									<td>{item.name}</td>
+									<td>{item?.wordMark}</td>
 									<td className="text-center">{item.class}</td>
 									<td className="text-center">
 										{item.variants.length ? "yes" : "no"}
