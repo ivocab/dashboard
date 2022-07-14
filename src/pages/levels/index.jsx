@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
-import CustomButton from "../../components/customButton";
-import CustomInput from "../../components/customInput";
-import CustomSelect from "../../components/customSelect";
-import CustomTable from "../../components/customTable";
-import { del, edit } from "../../components/icons";
-import Loading from "../../components/loading";
-import Pagination from "../../components/pagination";
-import { levelsService } from "../../services/levelsService";
-import st from "./levels.module.scss";
+import React, { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import CustomButton from '../../components/customButton';
+import CustomInput from '../../components/customInput';
+import CustomSelect from '../../components/customSelect';
+import CustomTable from '../../components/customTable';
+import { del, edit } from '../../components/icons';
+import Loading from '../../components/loading';
+import Pagination from '../../components/pagination';
+import { levelsService } from '../../services/levelsService';
+import st from './levels.module.scss';
 
 const Levels = () => {
 	const [data, setData] = useState([]),
@@ -18,7 +18,7 @@ const Levels = () => {
 		defStateModal = {
 			show: false,
 			showDel: false,
-			type: "add",
+			type: 'add',
 		},
 		[modal, setModal] = useState(defStateModal);
 
@@ -38,7 +38,7 @@ const Levels = () => {
 	const onSave = (e) => {
 		e.preventDefault();
 
-		const data = {
+		const DATA = {
 			name: e.target[0].value,
 			markForMin: +e.target[1].value,
 			mark: +e.target[2].value,
@@ -46,12 +46,14 @@ const Levels = () => {
 				min: +e.target[3].value,
 				max: +e.target[4].value,
 			},
-			status: "active",
+			index: data?.levels?.length + 1,
 		};
 
-		modal.type === "add"
+		console.log(DATA);
+
+		modal.type === 'add'
 			? levelsService
-					.add(data)
+					.add(DATA)
 					.then((res) => {
 						setModal(defStateModal);
 						getData();
@@ -83,15 +85,15 @@ const Levels = () => {
 					title="Limit:"
 					options={[
 						{
-							title: "5",
+							title: '5',
 							value: 5,
 						},
 						{
-							title: "10",
+							title: '10',
 							value: 10,
 						},
 						{
-							title: "20",
+							title: '20',
 							value: 20,
 						},
 					]}
@@ -99,10 +101,7 @@ const Levels = () => {
 					setValue={setLimit}
 					className="me-3"
 				/>
-				<CustomButton
-					title="Create"
-					onClick={() => setModal((prev) => ({ ...prev, show: true }))}
-				/>
+				<CustomButton title="Create" onClick={() => setModal((prev) => ({ ...prev, show: true }))} />
 			</div>
 			<CustomTable
 				table={
@@ -134,7 +133,7 @@ const Levels = () => {
 													setModal((prev) => ({
 														...prev,
 														show: true,
-														type: "edit",
+														type: 'edit',
 														data: item,
 													}))
 												}>
@@ -167,24 +166,14 @@ const Levels = () => {
 				</Modal.Header>
 				<form onSubmit={onSave}>
 					<Modal.Body>
-						<CustomInput
-							type="text"
-							defVal={modal?.data?.name}
-							title="Name:"
-							placeholder="Beginer"
-						/>
+						<CustomInput type="text" defVal={modal?.data?.name} title="Name:" placeholder="Beginer" />
 						<CustomInput
 							type="number"
 							defVal={modal?.data?.markForMin}
 							title="Mark for 60sec:"
 							placeholder="100"
 						/>
-						<CustomInput
-							type="number"
-							defVal={modal?.data?.mark}
-							title="Mark:"
-							placeholder="10"
-						/>
+						<CustomInput type="number" defVal={modal?.data?.mark} title="Mark:" placeholder="10" />
 						<CustomInput
 							type="number"
 							defVal={modal?.data?.accessMark?.min}

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
-import CustomButton from "../../components/customButton";
-import CustomInput from "../../components/customInput";
-import CustomSelect from "../../components/customSelect";
-import CustomTable from "../../components/customTable";
-import { del, edit, plus, voiceIcon } from "../../components/icons";
-import Loading from "../../components/loading";
-import Pagination from "../../components/pagination";
-import UploadFile from "../../components/uploadFile";
-import { levelsService } from "../../services/levelsService";
-import { wordsService } from "../../services/wordsService";
-import st from "./words.module.scss";
+import React, { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import CustomButton from '../../components/customButton';
+import CustomInput from '../../components/customInput';
+import CustomSelect from '../../components/customSelect';
+import CustomTable from '../../components/customTable';
+import { del, edit, plus, voiceIcon } from '../../components/icons';
+import Loading from '../../components/loading';
+import Pagination from '../../components/pagination';
+import UploadFile from '../../components/uploadFile';
+import { levelsService } from '../../services/levelsService';
+import { wordsService } from '../../services/wordsService';
+import st from './words.module.scss';
 
 const Words = () => {
 	const [data, setData] = useState([]),
@@ -21,13 +21,13 @@ const Words = () => {
 		defStateModal = {
 			show: false,
 			showDel: false,
-			type: "add",
+			type: 'add',
 		},
-		[voice, setVoice] = useState(""),
-		[image, setImage] = useState(""),
+		[voice, setVoice] = useState(''),
+		[image, setImage] = useState(''),
 		[modal, setModal] = useState(defStateModal),
 		[variants, setVariants] = useState([]),
-		[searchedData, setSearchedData] = useState([{ title: "Select...", value: "123" }]);
+		[searchedData, setSearchedData] = useState([{ title: 'Select...', value: '123' }]);
 
 	const getData = () => {
 		setLoading(true);
@@ -42,7 +42,7 @@ const Words = () => {
 		wordsService.get(`name=${name}`).then((res) => {
 			const temp = [];
 			res.data.data.words.map((data) => temp.push({ title: data.name, value: data._id }));
-			setSearchedData([{ title: "Select...", value: "123" }, ...temp]);
+			setSearchedData([{ title: 'Select...', value: '123' }, ...temp]);
 		});
 	};
 
@@ -83,7 +83,7 @@ const Words = () => {
 				variants: variants.map((item) => item.value),
 			};
 
-			modal.type === "add"
+			modal.type === 'add'
 				? wordsService
 						.add(data)
 						.then((res) => {
@@ -118,15 +118,15 @@ const Words = () => {
 					title="Limit:"
 					options={[
 						{
-							title: "5",
+							title: '5',
 							value: 5,
 						},
 						{
-							title: "10",
+							title: '10',
 							value: 10,
 						},
 						{
-							title: "20",
+							title: '20',
 							value: 20,
 						},
 					]}
@@ -134,10 +134,7 @@ const Words = () => {
 					setValue={setLimit}
 					className="me-3"
 				/>
-				<CustomButton
-					title="Create"
-					onClick={() => setModal((prev) => ({ ...prev, show: true }))}
-				/>
+				<CustomButton title="Create" onClick={() => setModal((prev) => ({ ...prev, show: true }))} />
 			</div>
 			<CustomTable
 				table={
@@ -172,9 +169,7 @@ const Words = () => {
 									<td>{item.name}</td>
 									<td>{item?.wordMark}</td>
 									<td className="text-center">{item.class}</td>
-									<td className="text-center">
-										{item.variants.length ? "yes" : "no"}
-									</td>
+									<td className="text-center">{item.variants.length ? 'yes' : 'no'}</td>
 									<td className="text-center text-nowrap">[{item.transcript}]</td>
 									<td
 										className="text-center"
@@ -198,7 +193,7 @@ const Words = () => {
 													setModal((prev) => ({
 														...prev,
 														show: true,
-														type: "edit",
+														type: 'edit',
 														data: item,
 													}));
 													if (item?.variants)
@@ -239,12 +234,7 @@ const Words = () => {
 					<Modal.Body>
 						<div className={st.words__form__inputs}>
 							<div className={st.words__form__inputs__left}>
-								<CustomInput
-									type="text"
-									defVal={modal?.data?.name}
-									title="Name:"
-									placeholder="Apple"
-								/>
+								<CustomInput type="text" defVal={modal?.data?.name} title="Name:" placeholder="Apple" />
 								<CustomInput
 									type="text"
 									defVal={modal?.data?.class}
@@ -269,11 +259,7 @@ const Words = () => {
 									title="Translation Uz:"
 									placeholder="Olma"
 								/>
-								<CustomSelect
-									title="Level:"
-									options={levelsData}
-									value={modal?.data?.level?._id}
-								/>
+								<CustomSelect title="Level:" options={levelsData} value={modal?.data?.level?._id} />
 							</div>
 							<div className={st.words__form__inputs__voice}>
 								<UploadFile
@@ -284,11 +270,7 @@ const Words = () => {
 								/>
 							</div>
 							<div className={st.words__form__inputs__image}>
-								<UploadFile
-									defFile={modal?.data?.image}
-									title="Image"
-									setValue={setImage}
-								/>
+								<UploadFile defFile={modal?.data?.image} title="Image" setValue={setImage} />
 							</div>
 						</div>
 						<div className={st.words__form__footer}>
@@ -308,12 +290,10 @@ const Words = () => {
 									<td>
 										<CustomSelect
 											title="Select"
-											value={"123"}
+											value={'123'}
 											options={searchedData}
 											setValue={(e) => {
-												const temp = searchedData.find(
-													(item) => item.value === e
-												);
+												const temp = searchedData.find((item) => item.value === e);
 												setVariants((prev) => [...prev, temp]);
 											}}
 										/>
