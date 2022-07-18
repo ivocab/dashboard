@@ -226,7 +226,12 @@ const Words = () => {
 			/>
 
 			<Pagination page={page} limit={limit} total={data.total} setPage={setPage} />
-			<Modal show={modal.show} size="lg" onHide={() => setModal(defStateModal)}>
+			<Modal
+				backdrop="static"
+				show={modal.show}
+				size="lg"
+				onHide={() => setModal(defStateModal)}
+				className="text-dark">
 				<Modal.Header closeButton>
 					<Modal.Title>Words {modal.type}</Modal.Title>
 				</Modal.Header>

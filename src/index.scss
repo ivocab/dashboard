@@ -1,7 +1,7 @@
 body {
 	margin: 0;
 	min-height: 100vh;
-	background-color: #eee !important;
+	background-color: #000 !important;
 	position: relative;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -10,13 +10,19 @@ body {
 * {
 	box-sizing: border-box;
 	line-height: 100% !important;
-	font-family: "Poppins", sans-serif;
+	font-family: 'Poppins', sans-serif;
 	color: #342647;
 }
 
 input,
 select {
+	background-color: #555 !important;
+
 	&:focus {
 		outline: none;
 	}
+}
+
+.modal-content {
+	background-color: #555 !important;
 }
