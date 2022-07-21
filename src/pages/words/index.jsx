@@ -114,6 +114,7 @@ const Words = () => {
 	return (
 		<div className={st.words}>
 			<div className={st.words__manipulations}>
+				<h4>Total: {data.total}</h4>
 				<CustomSelect
 					title="Limit:"
 					options={[
