@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const API = "https://api.gooded.xyz/api";
+export const API = "http://localhost:5001/api";
 
 export const axiosInstance = axios.create({
-	baseURL: API,
-	headers: {
-		Authorization: `Bearer ${localStorage.getItem("token")}`,
-	},
+  baseURL: API,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
 });
