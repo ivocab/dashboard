@@ -1,18 +1,22 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { routes } from "../routes/index.js";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { RouteNames } from "../routes";
+import { adminRoutes } from "../routes/index.js";
 
 const AppRouter = () => {
-	return (
-		<Routes>
-			{routes.map((route) => (
-				<Route path={route.path} key={route.path} element={<route.element />} />
-			))}
-			<Route path="*" element={<Navigate to={RouteNames.HOME} />} />
-		</Routes>
-	);
+  const role = useSelector((state) => state.auth);
+
+  console.log("role", role);
+
+  return (
+    <Routes>
+      {adminRoutes.map((route) => (
+        <Route path={route.path} key={route.path} element={<route.element />} />
+      ))}
+      <Route path="*" element={<Navigate to={RouteNames.HOME} />} />
+    </Routes>
+  );
 };
 
 export default AppRouter;

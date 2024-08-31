@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API = "http://localhost:5001/api";
+export const API = "https://api.gooded.uz/api";
 
 export const axiosInstance = axios.create({
   baseURL: API,

@@ -24,10 +24,11 @@ const Login = () => {
     authService
       .login(data)
       .then((res) => {
+        console.log("res", res);
         if (res.data.status === "success") {
           setLoading(false);
           localStorage.setItem("token", res.data.data.token);
-          dispatch(SetAuth(true, res.data.data.token));
+          dispatch(SetAuth(true, res.data.data.token, res.data.data.user.role));
           window.location.assign("/");
         }
       })
